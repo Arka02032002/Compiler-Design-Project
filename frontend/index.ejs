@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Graph Generator</title>
+    <link rel="stylesheet" href="../static/index.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="code_container">
+        <h2>Code Editor</h2>
+        <form action="/" method="POST">
+          <div class="group">
+            <label for="graph type">Graph Type</label>
+            <select id="graph_type" name="graph_type">
+              <option value="select">Select a Graph Type</option>
+              <option value="bar">Bar Graph</option>
+              <option value="pie">Pie Chart</option>
+            </select>
+          </div>
+
+          <div class="group">
+            <label for="graph data">Graph Data</label>
+            <input type="text" name="graph_data" id="graph_data" />
+          </div>
+
+          <div class="group">
+            <label for="graph labls">Graph Labels</label>
+            <input type="text" name="graph_labels" id="graph_labels" />
+          </div>
+
+          <input type="submit" id=" btn_submit" value="Submit">
+        </form>
+      </div>
+
+      <div class="graph_output">
+        <h2>Graph</h2>
+        <div class="graph_container">
+          <canvas id="graph_canvas"> </canvas>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+
+      var labels = "<%=(labels) %>";
+      var data = "<%= data %>";
+      var split_labels = labels.split(",");
+      var split_data = data.split(",");
+
+      console.log(labels);
+      console.log(split_labels);
+      console.log(split_data);
+
+      console.log(data);
+
+      const ctx = document.getElementById("graph_canvas");
+
+      
+
+      new Chart(ctx, {
+        type: "<%-type%>",
+        data: {
+          labels: split_labels,
+          datasets: [
+            {
+              label: "<%-description%>",
+              data: split_data,
+              borderWidth: 3,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
